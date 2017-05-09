@@ -12,7 +12,7 @@ const baseWebpackConfig = require('./webpack.base.config.js')
 const packageDotJson = require('../package.json')
 
 const projectRoot = path.resolve(__dirname, '../')
-const ignorePackage = ['font-awesome', 'bulma']
+const ignorePackage = []
 
 module.exports = merge(baseWebpackConfig, {
 	entry: {
@@ -20,7 +20,7 @@ module.exports = merge(baseWebpackConfig, {
 		vendor: Object.keys(packageDotJson.dependencies).filter(function (el) {
 			return !ignorePackage.includes(el)
 		}),
-		style: [ 'bulma/bulma.sass', 'font-awesome/css/font-awesome.min.css' ]
+		style: []
 	},
 	output: {
 		publicPath: '/static/',
@@ -52,7 +52,7 @@ module.exports = merge(baseWebpackConfig, {
 			}, {
 				test: /\.(scss|sass)$/,
 				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
+					fallback: 'style',
 					use: [ {
 						loader: 'css',
 						options: {
@@ -67,7 +67,7 @@ module.exports = merge(baseWebpackConfig, {
 			}, {
 				test: /\.(css|scss|sass)$/,
 				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
+					fallback: 'style',
 					use: [ {
 						loader: 'css',
 						options: {
@@ -118,13 +118,6 @@ module.exports = merge(baseWebpackConfig, {
 			allChunks: true,
 			ignoreOrder: true
 		}),
-		new webpack.DefinePlugin({
-			__DEBUG__: 'false'
-		}),
-		new webpack.EnvironmentPlugin({
-			NODE_ENV: 'production',
-			API: 'https://jsonplaceholder.typicode.com'
-		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
@@ -147,6 +140,13 @@ module.exports = merge(baseWebpackConfig, {
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false
+		}),
+		new webpack.DefinePlugin({
+			__DEBUG__: 'false'
+		}),
+		new webpack.EnvironmentPlugin({
+			NODE_ENV: 'production',
+			API: 'https://jsonplaceholder.typicode.com'
 		})
 	]
 })

@@ -13,8 +13,6 @@ module.exports = merge(baseWebpackConfig, {
 		'react-hot-loader/patch',
 		'webpack-dev-server/client?http://localhost:8080',
 		'webpack/hot/only-dev-server',
-		'bulma/bulma.sass',
-		'font-awesome/css/font-awesome.min.css',
 		path.resolve(projectRoot, 'src/index.js')
 	],
 	output: {
@@ -58,23 +56,6 @@ module.exports = merge(baseWebpackConfig, {
 			}
 		]
 	},
-	plugins: [
-		new DashboardPlugin(),
-		new HtmlWebpackPlugin({
-			title: 'React Redux Boilerplate',
-			filename: 'index.html',
-			template: path.resolve(projectRoot, 'public/index.html')
-		}),
-		new webpack.HotModuleReplacementPlugin(),
-		new webpack.DefinePlugin({
-			__DEBUG__: 'true'
-		}),
-		new webpack.EnvironmentPlugin({
-			NODE_ENV: 'development',
-			API: 'https://jsonplaceholder.typicode.com'
-		}),
-		new webpack.NamedModulesPlugin()
-	],
 	devServer: {
 		inline: false,
 		hot: true,
@@ -84,5 +65,22 @@ module.exports = merge(baseWebpackConfig, {
 			index: '/static/'
 		},
 		quiet: true
-	}
+	},
+	plugins: [
+		new DashboardPlugin(),
+		new HtmlWebpackPlugin({
+			title: 'React Redux Boilerplate',
+			filename: 'index.html',
+			template: path.resolve(projectRoot, 'public/index.html')
+		}),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NamedModulesPlugin(),
+		new webpack.DefinePlugin({
+			__DEBUG__: 'true'
+		}),
+		new webpack.EnvironmentPlugin({
+			NODE_ENV: 'development',
+			API: 'https://jsonplaceholder.typicode.com'
+		})
+	]
 })

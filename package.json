@@ -10,8 +10,6 @@
     "build": "cross-env NODE_ENV=production webpack -p --config ./config/webpack.prod.config.js"
   },
   "dependencies": {
-    "bulma": "^0.3.1",
-    "font-awesome": "^4.7.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
