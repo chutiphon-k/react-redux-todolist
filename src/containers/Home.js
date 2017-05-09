@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import * as actions from 'actions'
+import { TestComponent } from 'components'
 
 const { getTest } = actions
 
@@ -23,6 +24,8 @@ class Home extends Component {
 				<Link to='/about'>
 					<button className="button is-primary is-large">Button</button>
 				</Link>
+				<br />
+				<TestComponent data={[ 'a', 'b', 'c', 'd' ]} />
 			</div>
 		)
 	}
