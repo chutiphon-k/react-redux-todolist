@@ -13,6 +13,8 @@ module.exports = merge(baseWebpackConfig, {
 		'react-hot-loader/patch',
 		'webpack-dev-server/client?http://localhost:8080',
 		'webpack/hot/only-dev-server',
+		'bootstrap/dist/css/bootstrap.min.css',
+		path.resolve(projectRoot, 'src/stylesheets/main.scss'),
 		path.resolve(projectRoot, 'src/index.js')
 	],
 	output: {

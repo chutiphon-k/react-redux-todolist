@@ -12,7 +12,7 @@ const baseWebpackConfig = require('./webpack.base.config.js')
 const packageDotJson = require('../package.json')
 
 const projectRoot = path.resolve(__dirname, '../')
-const ignorePackage = []
+const ignorePackage = [ 'bootstrap' ]
 
 module.exports = merge(baseWebpackConfig, {
 	entry: {
@@ -20,7 +20,7 @@ module.exports = merge(baseWebpackConfig, {
 		vendor: Object.keys(packageDotJson.dependencies).filter(function (el) {
 			return !ignorePackage.includes(el)
 		}),
-		style: []
+		style: [ 'bootstrap/dist/css/bootstrap.min.css', path.resolve(projectRoot, 'src/stylesheets/main.scss') ]
 	},
 	output: {
 		publicPath: '/static/',
