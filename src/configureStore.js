@@ -17,5 +17,6 @@ export default (history) => {
 		rootReducer,
 		enhancer
 	)
+
 	return store
 }

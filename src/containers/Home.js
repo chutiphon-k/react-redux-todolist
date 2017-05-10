@@ -14,7 +14,8 @@ class Home extends Component {
 		this.state = {
 			showModalAdd: false,
 			showModalEdit: false,
-			taskId: undefined
+			taskId: undefined,
+			filter: 'all'
 		}
 
 		this._callModalAdd = this._callModalAdd.bind(this)
@@ -32,12 +33,12 @@ class Home extends Component {
 	_checkboxComplated (event, data) {
 		this.props.editList({
 			...data,
-			isComplated: event.target.checked
+			status: (event.target.checked) ? 'complete' : 'incomplete'
 		})
 	}
 
 	_getFilter (event) {
-		console.log(event)
+		this.setState({ filter: event.target.value })
 	}
 
 	render () {
@@ -45,9 +46,9 @@ class Home extends Component {
 			<div>
 				<h1>React Redux ToDoList</h1>
 				<div>
-					<FormControl componentClass='select' placeholder='filter' onChange={this._getFilter}>
-						<option value={undefined}>All</option>
-						<option value='complated'>Complated</option>
+					<FormControl componentClass='select' placeholder='filter' onChange={this._getFilter.bind(this)}>
+						<option value='all'>All</option>
+						<option value='complete'>Complete</option>
 						<option value='incomplete'>Incomplete</option>
 					</FormControl>
 					Reminders {' '}
@@ -60,10 +61,10 @@ class Home extends Component {
 				</div>
 				<ListGroup>
 					{
-						this.props.lists.map((list, index) => {
+						this.props.lists.filter(list => list.status === this.state.filter || this.state.filter === 'all').map((list, index) => {
 							return (
-								<ListGroupItem key={index} bsStyle={(list.isComplated) ? 'danger' : undefined}>
-									<Checkbox onChange={(event) => this._checkboxComplated(event, list)} inline />
+								<ListGroupItem key={index} bsStyle={(list.status === 'complete') ? 'danger' : undefined}>
+									<Checkbox onChange={(event) => this._checkboxComplated(event, list)} checked={list.status === 'complete'} inline />
 									{list.id} {list.title} : {list.description}
 									<Button
 										bsStyle='primary'

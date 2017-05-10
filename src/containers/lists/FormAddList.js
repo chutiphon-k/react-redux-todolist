@@ -39,7 +39,7 @@ const validate = values => {
 const mapStateToProps = (state, ownProps) => ({
 	initialValues: {
 		id: ownProps.taskId,
-		isComplated: false
+		status: 'incomplete'
 	}
 })
 
