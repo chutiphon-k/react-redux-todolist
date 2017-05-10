@@ -17,6 +17,13 @@ export default (state = initialState, action) => {
 				...state,
 				data: tmpData
 			}
+		case 'DELETE_LIST':
+			tmpData = [ ...state.data ]
+			tmpData.splice(action.taskId, 1)
+			return {
+				...state,
+				data: tmpData
+			}
 		default:
 			return state
 	}

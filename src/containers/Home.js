@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 
+import * as actions from 'actions'
 import { FormAddList, FormEditList } from 'containers/lists'
+
+const { deleteList } = actions
 
 class Home extends Component {
 	constructor () {
@@ -56,6 +59,12 @@ class Home extends Component {
 										onClick={() => this._callModalEdit(index)} >
 										edit
 									</Button>
+									<Button
+										bsStyle='danger'
+										bsSize='xsmall'
+										onClick={() => this.props.deleteList(index)} >
+										delete
+									</Button>
 								</ListGroupItem>
 							)
 						})
@@ -72,7 +81,11 @@ const mapStateToProps = (state) => ({
 	lists: state.lists.data
 })
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+	deleteList (taskId) {
+		dispatch(deleteList(taskId))
+	}
+})
 
 export default connect(
 	mapStateToProps,
