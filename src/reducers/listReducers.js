@@ -4,6 +4,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	let tmpData = []
+	let index
+
 	switch (action.type) {
 		case 'ADD_LIST':
 			return {
@@ -12,14 +14,16 @@ export default (state = initialState, action) => {
 			}
 		case 'EDIT_LIST':
 			tmpData = [ ...state.data ]
-			tmpData[action.taskId] = action.payload
+			index = tmpData.findIndex(list => list.id === action.payload.id)
+			tmpData[index] = action.payload
 			return {
 				...state,
 				data: tmpData
 			}
 		case 'DELETE_LIST':
 			tmpData = [ ...state.data ]
-			tmpData.splice(action.taskId, 1)
+			index = tmpData.findIndex(list => list.id === action.payload.id)
+			tmpData.splice(index, 1)
 			return {
 				...state,
 				data: tmpData

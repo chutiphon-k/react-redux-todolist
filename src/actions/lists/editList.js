@@ -1,5 +1,4 @@
-export default (data, taskId) => ({
+export default (data) => ({
 	type: 'EDIT_LIST',
-	taskId,
 	payload: data
 })

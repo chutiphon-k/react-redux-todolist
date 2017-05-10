@@ -38,13 +38,13 @@ const validate = values => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	initialValues: state.lists.data[ownProps.taskId]
+	initialValues: state.lists.data.find(list => list.id === ownProps.taskId)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSubmit (data) {
 		ownProps._callModal()
-		dispatch(editList(data, ownProps.taskId))
+		dispatch(editList(data))
 	}
 })
 

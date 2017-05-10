@@ -36,7 +36,12 @@ const validate = values => {
 	return errors
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state, ownProps) => ({
+	initialValues: {
+		id: ownProps.taskId,
+		isComplated: false
+	}
+})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSubmit (data) {
@@ -53,5 +58,6 @@ export default connect(
 	mapDispatchToProps
 )(reduxForm({
 	form: 'formAddList',
-	validate
+	validate,
+	enableReinitialize: true
 })(FormAddList))

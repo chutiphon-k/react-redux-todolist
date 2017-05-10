@@ -1,4 +1,4 @@
-export default (taskId) => ({
+export default (data) => ({
 	type: 'DELETE_LIST',
-	taskId
+	payload: data
 })
