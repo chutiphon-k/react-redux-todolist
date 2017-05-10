@@ -16,7 +16,6 @@ const routes = (store, history) => (
 	<Router history={syncHistoryWithStore(history, store)}>
 		<Route path='/' getComponent = {(location, cb) => { System.import('containers/App').then(loadRoute(cb)).catch(errorLoading) }}>
 			<IndexRoute getComponent = {(location, cb) => { System.import('containers/Home').then(loadRoute(cb)).catch(errorLoading) }} />
-			<Route path='about' getComponent = {(location, cb) => { System.import('containers/About').then(loadRoute(cb)).catch(errorLoading) }} />
 		</Route>
 	</Router>
 )

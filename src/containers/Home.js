@@ -1,59 +1,45 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import * as actions from 'actions'
-import { TestComponent } from 'components'
 
-const { getTest } = actions
+const { addList } = actions
 
 class Home extends Component {
-	constructor () {
-		super()
-
-		this.state = {
-			data: []
-		}
-
-		this._addRandom = this._addRandom.bind(this)
-	}
-
-	_addRandom () {
-		this.setState({ data: [ ...this.state.data, Math.random() ] })
-	}
-
 	render () {
 		return (
 			<div>
-				<div className="content">
-					<h1>Home</h1>
-						{
-							JSON.stringify(this.props.test)
-						}
+				<h1>React Redux ToDoList</h1>
+				<div>
+					Reminders {' '}
+					<Button bsStyle='primary'
+						bsSize='xsmall'
+						onClick={() => this.props.addList(Math.random())} >
+						+
+					</Button>
 				</div>
-				<button className="button is-danger" onClick={this.props.getTest}>
-					Load
-				</button>
-				<br />
-				<Link to='/about'>
-					<button className="button is-primary is-large">Button</button>
-				</Link>
-				<br />
-				<Button onClick={this._addRandom}>Add</Button>
-				<TestComponent data={this.state.data} />
+				<ListGroup>
+					{
+						this.props.lists.map((value, index) => {
+							return (
+								<ListGroupItem key={index}>{value}</ListGroupItem>
+							)
+						})
+					}
+				</ListGroup>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
-	test: state.test.get.data
+	lists: state.lists.data
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	getTest () {
-		dispatch(getTest())
+	addList (data) {
+		dispatch(addList(data))
 	}
 })
 

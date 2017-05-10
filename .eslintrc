@@ -8,12 +8,16 @@
   ],
   "rules": {
       "no-tabs": "off",        
-      "indent": ["error", "tab", {"SwitchCase": 1}],
+      "indent": [ "error", "tab", { "SwitchCase": 1 } ],
       "no-console": "warn",
-      "no-var": "error",      
+      "no-var": "error",
+      "camelcase": 0,
+      "jsx-quotes": [ 2, "prefer-single" ],
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
-      "react/jsx-space-before-closing": "error"
+      "react/jsx-space-before-closing": "error",
+      "react/jsx-indent": [ "error", "tab" ],
+      "react/prefer-es6-class": 2
   },
   "parserOptions": {
     "ecmaVersion": 6,
