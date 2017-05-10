@@ -40,7 +40,7 @@ const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSubmit (data) {
-		ownProps._callModalAdd()
+		ownProps._callModal()
 		dispatch(addList(data))
 	},
 	onSubmitSuccess () {

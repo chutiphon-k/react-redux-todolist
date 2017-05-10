@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 
-import * as actions from 'actions'
 import { FormAddList, FormEditList } from 'containers/lists'
-
-const { addList } = actions
 
 class Home extends Component {
 	constructor () {
@@ -13,19 +10,25 @@ class Home extends Component {
 
 		this.state = {
 			showModalAdd: false,
-			showModalEdit: false
+			showModalEdit: false,
+			taskId: undefined
 		}
 
 		this._callModalAdd = this._callModalAdd.bind(this)
 		this._callModalEdit = this._callModalEdit.bind(this)
+	}
+	state = {
+		showModalAdd: false,
+		showModalEdit: false,
+		taskId: undefined
 	}
 
 	_callModalAdd () {
 		this.setState({ showModalAdd: !this.state.showModalAdd })
 	}
 
-	_callModalEdit () {
-		this.setState({ showModalEdit: !this.state.showModalEdit })
+	_callModalEdit (taskId) {
+		this.setState({ showModalEdit: !this.state.showModalEdit, taskId })
 	}
 
 	render () {
@@ -34,28 +37,32 @@ class Home extends Component {
 				<h1>React Redux ToDoList</h1>
 				<div>
 					Reminders {' '}
-					<Button bsStyle='primary'
+					<Button
+						bsStyle='primary'
 						bsSize='xsmall'
-						onClick={this._callModalAdd} >
+						onClick={() => this._callModalAdd()} >
 						+
 					</Button>
 				</div>
-				<Button bsStyle='primary'
-					bsSize='xsmall'
-					onClick={this._callModalEdit} >
-					edit
-				</Button>
 				<ListGroup>
 					{
 						this.props.lists.map((list, index) => {
 							return (
-								<ListGroupItem key={index}>{list.title} : {list.description}</ListGroupItem>
+								<ListGroupItem key={index}>
+									{index} {list.title} : {list.description}
+									<Button
+										bsStyle='primary'
+										bsSize='xsmall'
+										onClick={() => this._callModalEdit(index)} >
+										edit
+									</Button>
+								</ListGroupItem>
 							)
 						})
 					}
 				</ListGroup>
 				<FormAddList showModal={this.state.showModalAdd} _callModal={this._callModalAdd} />
-				<FormEditList showModal={this.state.showModalEdit} _callModal={this._callModalEdit} />
+				<FormEditList showModal={this.state.showModalEdit} _callModal={this._callModalEdit} taskId={this.state.taskId} />
 			</div>
 		)
 	}
@@ -65,11 +72,7 @@ const mapStateToProps = (state) => ({
 	lists: state.lists.data
 })
 
-const mapDispatchToProps = (dispatch) => ({
-	addList (data) {
-		dispatch(addList(data))
-	}
-})
+const mapDispatchToProps = (dispatch) => ({})
 
 export default connect(
 	mapStateToProps,

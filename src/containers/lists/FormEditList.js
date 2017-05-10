@@ -1,16 +1,17 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, reset } from 'redux-form'
+import { reduxForm } from 'redux-form'
 
 import * as actions from 'actions'
 import { ModalFormList } from 'components/lists'
 
-const { addList } = actions
+const { editList } = actions
 
 class FormEditList extends Component {
 	static propTypes = {
 		showModal: PropTypes.bool.isRequired,
-		_callModal: PropTypes.func.isRequired
+		_callModal: PropTypes.func.isRequired,
+		taskId: PropTypes.number
 	}
 
 	render () {
@@ -36,20 +37,14 @@ const validate = values => {
 	return errors
 }
 
-const mapStateToProps = (state) => ({
-	initialValues: {
-		title: 'eieiza',
-		description: 'asdas'
-	}
+const mapStateToProps = (state, ownProps) => ({
+	initialValues: state.lists.data[ownProps.taskId]
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSubmit (data) {
-		ownProps._callModalAdd()
-		dispatch(addList(data))
-	},
-	onSubmitSuccess () {
-		dispatch(reset('formEditList'))
+		ownProps._callModal()
+		dispatch(editList(data, ownProps.taskId))
 	}
 })
 
@@ -58,5 +53,6 @@ export default connect(
 	mapDispatchToProps
 )(reduxForm({
 	form: 'formEditList',
+	enableReinitialize: true,
 	validate
 })(FormEditList))

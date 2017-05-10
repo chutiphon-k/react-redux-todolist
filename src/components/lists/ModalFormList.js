@@ -19,9 +19,10 @@ function ModalFormList (props) {
 			</Modal.Header>
 			<Modal.Body>
 				<form onSubmit={handleSubmit}>
-					Title: <Field component='input' name='title' />
+					Title: <Field component='input' name='title' autoFocus />
 					<br />
 					Description: <Field component='input' name='description' />
+					<button type='submit' onClick={submit} hidden />
 				</form>
 			</Modal.Body>
 			<Modal.Footer>
