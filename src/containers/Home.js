@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { Button } from 'react-bootstrap'
 
 import * as actions from 'actions'
 import { TestComponent } from 'components'
@@ -8,6 +9,20 @@ import { TestComponent } from 'components'
 const { getTest } = actions
 
 class Home extends Component {
+	constructor () {
+		super()
+
+		this.state = {
+			data: []
+		}
+
+		this._addRandom = this._addRandom.bind(this)
+	}
+
+	_addRandom () {
+		this.setState({ data: [ ...this.state.data, Math.random() ] })
+	}
+
 	render () {
 		return (
 			<div>
@@ -25,7 +40,8 @@ class Home extends Component {
 					<button className="button is-primary is-large">Button</button>
 				</Link>
 				<br />
-				<TestComponent data={[ 'a', 'b', 'c', 'd' ]} />
+				<Button onClick={this._addRandom}>Add</Button>
+				<TestComponent data={this.state.data} />
 			</div>
 		)
 	}
