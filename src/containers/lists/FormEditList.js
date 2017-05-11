@@ -18,10 +18,12 @@ class FormEditList extends Component {
 		return (
 			<ModalFormList
 				showModal={this.props.showModal}
-				_onHide={this.props._callModal}
+				onHide={this.props._callModal}
 				handleSubmit={this.props.handleSubmit}
 				submit={this.props.submit}
-				reset={this.props.reset} />
+				reset={this.props.reset}
+				meta={this.props.meta}
+				modalTitle='EDIT' />
 		)
 	}
 }

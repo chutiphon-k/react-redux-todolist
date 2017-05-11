@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, ListGroup, ListGroupItem, Checkbox, FormControl } from 'react-bootstrap'
+import moment from 'moment'
 
 import * as actions from 'actions'
 import { FormAddList, FormEditList } from 'containers/lists'
@@ -62,21 +63,22 @@ class Home extends Component {
 				</div>
 				<ListGroup>
 					{
-						this.props.lists.filter(list => list.status === this.state.filter || this.state.filter === 'all').map((list, index) => {
+						this.props.lists.filter(list => list.status === this.state.filter || this.state.filter === 'all').map(list => {
+							let { id, status, title, description, date } = list
 							return (
-								<ListGroupItem key={index} bsStyle={(list.status === 'complete') ? 'success' : undefined}>
-									<Checkbox onChange={(event) => this._checkboxComplated(event, list)} checked={list.status === 'complete'} inline />
-									{list.id} {list.title} : {list.description} {list.date}
+								<ListGroupItem key={id} bsStyle={ (status === 'complete') ? 'success' : undefined }>
+									<Checkbox onChange={(event) => this._checkboxComplated(event, list)} checked={status === 'complete'} inline />
+									{id} {title} : {description} {moment(date).calendar()}
 									<Button
 										bsStyle='primary'
 										bsSize='xsmall'
-										onClick={() => this._callModalEdit(list.id)} >
+										onClick={() => this._callModalEdit(id)} >
 										edit
 									</Button>
 									<Button
 										bsStyle='danger'
 										bsSize='xsmall'
-										onClick={() => this.props.deleteList(list.id)} >
+										onClick={() => this.props.deleteList(id)} >
 										delete
 									</Button>
 								</ListGroupItem>
