@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { reduxForm, reset } from 'redux-form'
+import { reduxForm } from 'redux-form'
+import moment from 'moment'
 
 import * as actions from 'actions'
 import { ModalFormList } from 'components/lists'
@@ -36,20 +37,17 @@ const validate = values => {
 	return errors
 }
 
-const mapStateToProps = (state, ownProps) => ({
-	initialValues: {
-		id: ownProps.taskId,
-		status: 'incomplete'
-	}
-})
+const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSubmit (data) {
 		ownProps._callModal()
-		dispatch(addList(data))
-	},
-	onSubmitSuccess () {
-		dispatch(reset('formAddList'))
+		dispatch(addList({
+			...data,
+			id: ownProps.taskId,
+			status: 'incomplete',
+			date: moment().toISOString()
+		}))
 	}
 })
 
@@ -58,6 +56,5 @@ export default connect(
 	mapDispatchToProps
 )(reduxForm({
 	form: 'formAddList',
-	validate,
-	enableReinitialize: true
+	validate
 })(FormAddList))

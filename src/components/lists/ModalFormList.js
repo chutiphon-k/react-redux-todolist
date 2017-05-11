@@ -13,7 +13,7 @@ ModalFormList.propTypes = {
 function ModalFormList (props) {
 	let { showModal, _onHide, handleSubmit, submit, reset } = props
 	return (
-		<Modal show={showModal} onHide={_onHide}>
+		<Modal show={showModal} onHide={_onHide} onExited={() => reset()}>
 			<Modal.Header closeButton>
 				<Modal.Title>Add List</Modal.Title>
 			</Modal.Header>
@@ -22,12 +22,11 @@ function ModalFormList (props) {
 					Title: <Field component='input' name='title' autoFocus />
 					<br />
 					Description: <Field component='input' name='description' />
-					<button type='submit' onClick={submit} hidden />
 				</form>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button bsStyle='primary' type='submit' onClick={submit}>Submit</Button>
 				<Button type='reset' onClick={reset}>Reset</Button>
+				<Button bsStyle='primary' type='submit' onClick={submit}>Submit</Button>
 			</Modal.Footer>
 		</Modal>
 	)

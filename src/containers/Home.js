@@ -23,7 +23,8 @@ class Home extends Component {
 	}
 
 	_callModalAdd () {
-		this.setState({ showModalAdd: !this.state.showModalAdd, taskId: this.props.lists.length + 1 })
+		let lastId = (this.props.lists.length === 0) ? 0 : [...this.props.lists].pop().id
+		this.setState({ showModalAdd: !this.state.showModalAdd, taskId: lastId + 1 })
 	}
 
 	_callModalEdit (taskId) {
@@ -37,7 +38,7 @@ class Home extends Component {
 		})
 	}
 
-	_getFilter (event) {
+	_filter (event) {
 		this.setState({ filter: event.target.value })
 	}
 
@@ -46,7 +47,7 @@ class Home extends Component {
 			<div>
 				<h1>React Redux ToDoList</h1>
 				<div>
-					<FormControl componentClass='select' placeholder='filter' onChange={this._getFilter.bind(this)}>
+					<FormControl componentClass='select' placeholder='filter' onChange={this._filter.bind(this)}>
 						<option value='all'>All</option>
 						<option value='complete'>Complete</option>
 						<option value='incomplete'>Incomplete</option>
@@ -63,9 +64,9 @@ class Home extends Component {
 					{
 						this.props.lists.filter(list => list.status === this.state.filter || this.state.filter === 'all').map((list, index) => {
 							return (
-								<ListGroupItem key={index} bsStyle={(list.status === 'complete') ? 'danger' : undefined}>
+								<ListGroupItem key={index} bsStyle={(list.status === 'complete') ? 'success' : undefined}>
 									<Checkbox onChange={(event) => this._checkboxComplated(event, list)} checked={list.status === 'complete'} inline />
-									{list.id} {list.title} : {list.description}
+									{list.id} {list.title} : {list.description} {list.date}
 									<Button
 										bsStyle='primary'
 										bsSize='xsmall'
@@ -83,8 +84,14 @@ class Home extends Component {
 						})
 					}
 				</ListGroup>
-				<FormAddList showModal={this.state.showModalAdd} _callModal={this._callModalAdd} taskId={this.state.taskId} />
-				<FormEditList showModal={this.state.showModalEdit} _callModal={this._callModalEdit} taskId={this.state.taskId} />
+				<FormAddList
+					showModal={this.state.showModalAdd}
+					_callModal={this._callModalAdd}
+					taskId={this.state.taskId} />
+				<FormEditList
+					showModal={this.state.showModalEdit}
+					_callModal={this._callModalEdit}
+					taskId={this.state.taskId} />
 			</div>
 		)
 	}
