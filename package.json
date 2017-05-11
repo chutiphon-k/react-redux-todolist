@@ -1,8 +1,8 @@
 {
-  "name": "react-redux-boilerplate",
+  "name": "react-redux-todolist",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://chutiphon-k@github.com/chutiphon-k/react-redux-boilerplate.git",
+  "repository": "https://chutiphon-k@github.com/chutiphon-k/react-redux-todolist.git",
   "author": "Chutiphon.k <chutiphon.k@ku.th>",
   "license": "MIT",
   "scripts": {
