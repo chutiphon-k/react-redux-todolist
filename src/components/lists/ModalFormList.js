@@ -35,8 +35,8 @@ function ModalFormList (props) {
 	return (
 		<Modal show={showModal} onHide={onHide} onExited={reset}>
 			<Modal.Header closeButton>
-				<Modal.Title componentClass='h3'>
-					<div className={styles.titleModal}>{modalTitle}</div>
+				<Modal.Title componentClass='h3' className={styles.titleModal}>
+					{modalTitle}
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -51,11 +51,9 @@ function ModalFormList (props) {
 					<Col xs={2} />
 				</Row>
 			</Modal.Body>
-			<Modal.Footer>
-				<div className={styles.button}>
-					<Button bsStyle='danger' type='reset' onClick={reset}>Reset</Button>
-					<Button bsStyle='primary' type='submit' onClick={submit}>Save</Button>
-				</div>
+			<Modal.Footer className={styles.button}>
+				<Button bsStyle='primary' type='submit' onClick={submit}>Save</Button>
+				<Button bsStyle='danger' type='reset' onClick={reset}>Reset</Button>
 			</Modal.Footer>
 		</Modal>
 	)

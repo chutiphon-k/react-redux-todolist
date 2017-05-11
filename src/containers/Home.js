@@ -1,20 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-	Button,
-	ListGroup,
-	ListGroupItem,
-	Checkbox,
-	FormControl,
-	Row,
-	Col,
-	Panel
-} from 'react-bootstrap'
-import moment from 'moment'
+import { Row, Col } from 'react-bootstrap'
 
 import * as actions from 'actions'
 import { FormAddList, FormEditList } from 'containers/lists'
 import styles from 'stylesheets/home.scss'
+import { TaskList } from 'components/lists'
 
 const { deleteList, editList } = actions
 
@@ -30,30 +21,31 @@ class Home extends Component {
 			showPanelDetail: {}
 		}
 
-		this._callModalAdd = this._callModalAdd.bind(this)
-		this._callModalEdit = this._callModalEdit.bind(this)
+		this.callModalAdd = this.callModalAdd.bind(this)
+		this.callModalEdit = this.callModalEdit.bind(this)
+		this.callFilter = this.callFilter.bind(this)
 	}
 
-	_callModalAdd () {
+	callModalAdd () {
 		this.setState({ showModalAdd: !this.state.showModalAdd, taskId: this.props.lastId + 1 })
 	}
 
-	_callModalEdit (taskId) {
+	callModalEdit (taskId) {
 		this.setState({ showModalEdit: !this.state.showModalEdit, taskId })
 	}
 
-	_checkboxComplated (event, data) {
+	checkboxComplated (event, data) {
 		this.props.editList({
 			...data,
 			status: (event.target.checked) ? 'complete' : 'incomplete'
 		})
 	}
 
-	_filter (event) {
+	callFilter (event) {
 		this.setState({ filter: event.target.value })
 	}
 
-	_showPanelDetailList (id) {
+	callPanelDetail (id) {
 		this.setState({ showPanelDetail: { ...this.state.showPanelDetail, [id]: !this.state.showPanelDetail[id] } })
 	}
 
@@ -65,75 +57,26 @@ class Home extends Component {
 				<Row>
 					<Col xs={2} />
 					<Col xs={8}>
-						<ListGroup>
-							<ListGroupItem>
-								<Row>
-									<Col xs={2}>
-										<h4 className={styles.titleList}>Reminders</h4>
-									</Col>
-									<Col xs={8}>
-										<FormControl componentClass='select' placeholder='filter' onChange={this._filter.bind(this)} value={this.state.filter}>
-											<option value='all'>All</option>
-											<option value='complete'>Complete</option>
-											<option value='incomplete'>Incomplete</option>
-										</FormControl>
-									</Col>
-									<Col xs={2} className={styles.button}>
-										<Button
-											bsStyle='primary'
-											onClick={this._callModalAdd} >
-											+
-										</Button>
-									</Col>
-								</Row>
-							</ListGroupItem>
-							{
-								this.props.lists.filter(list => list.status === this.state.filter || this.state.filter === 'all').map(list => {
-									let { id, status, title, description, date } = list
-									return (
-										<ListGroupItem key={id} href='#' bsStyle={ (status === 'complete') ? 'success' : undefined } onClick={() => this._showPanelDetailList(id)}>
-											<Row>
-												<Col xs={2} className={styles.checkbox}>
-													<Checkbox onChange={(event) => this._checkboxComplated(event, list)} checked={status === 'complete'} />
-												</Col>
-												<Col xs={8}>
-													<div className={styles.titleTask}>{title}</div>
-													<Panel collapsible expanded={this.state.showPanelDetail[id]} hidden={!this.state.showPanelDetail[id]}>
-														<div><span className={styles.titleDetail}>Task ID:</span> <span className={styles.detail}>{id}</span></div>
-														<div hidden={!description}><span className={styles.titleDetail}>Description:</span> <span className={styles.detail}>{description}</span></div>
-														<div><span className={styles.titleDetail}>Date:</span> <span className={styles.detail}>{moment(date).calendar()}</span></div>
-													</Panel>
-												</Col>
-												<Col xs={2} className={styles.button}>
-													<Button
-														bsStyle='success'
-														onClick={() => this._callModalEdit(id)}
-														block >
-														Edit
-													</Button>
-													<Button
-														bsStyle='danger'
-														onClick={() => this.props.deleteList(id)}
-														block >
-														Delete
-													</Button>
-												</Col>
-											</Row>
-										</ListGroupItem>
-									)
-								})
-							}
-						</ListGroup>
+						<TaskList
+							callFilter={this.callFilter}
+							filter={this.state.filter}
+							callModalAdd={this.callModalAdd}
+							lists={this.props.lists}
+							showPanelDetail={this.state.showPanelDetail}
+							callPanelDetail={(id) => this.callPanelDetail(id)}
+							checkboxComplated={(event, list) => this.checkboxComplated(event, list)}
+							callModalEdit={(id) => this.callModalEdit(id)}
+							deleteList={this.props.deleteList} />
 					</Col>
 					<Col xs={2} />
 				</Row>
 				<FormAddList
 					showModal={this.state.showModalAdd}
-					_callModal={this._callModalAdd}
+					_callModal={this.callModalAdd}
 					taskId={this.state.taskId} />
 				<FormEditList
 					showModal={this.state.showModalEdit}
-					_callModal={this._callModalEdit}
+					_callModal={this.callModalEdit}
 					taskId={this.state.taskId} />
 			</div>
 		)
