@@ -2,15 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
 	Button,
-	ButtonToolbar,
-	ButtonGroup,
 	ListGroup,
 	ListGroupItem,
 	Checkbox,
 	FormControl,
 	Row,
 	Col,
-	FormGroup,
 	Panel
 } from 'react-bootstrap'
 import moment from 'moment'

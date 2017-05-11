@@ -1,8 +1,16 @@
 import React, { PropTypes } from 'react'
 import { Field } from 'redux-form'
-import { Modal, Button } from 'react-bootstrap'
+import {
+	Modal,
+	Button,
+	Col,
+	Row,
+	FormGroup,
+	ControlLabel,
+	FormControl
+} from 'react-bootstrap'
 
-import styles from 'stylesheets/formlist.scss'
+import styles from 'stylesheets/modalformlist.scss'
 
 ModalFormList.propTypes = {
 	showModal: PropTypes.bool.isRequired,
@@ -14,12 +22,11 @@ ModalFormList.propTypes = {
 }
 
 const renderField = ({input, label, type, meta: {touched, error}}) => (
-	<div>
-		<label>{label}</label>
-		<div>
-			<input {...input} type={type} />{' '}
-			{touched && error && <span className={styles.error}>{error}</span>}
-		</div>
+	<div className={styles.fieldInput}>
+		<FormGroup validationState={ (touched && error) ? 'error' : null }>
+			<ControlLabel>{label}</ControlLabel>
+			<FormControl {...input} type={type} />
+		</FormGroup>
 	</div>
 )
 
@@ -28,17 +35,27 @@ function ModalFormList (props) {
 	return (
 		<Modal show={showModal} onHide={onHide} onExited={reset}>
 			<Modal.Header closeButton>
-				<Modal.Title>{modalTitle}</Modal.Title>
+				<Modal.Title componentClass='h3'>
+					<div className={styles.titleModal}>{modalTitle}</div>
+				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<form onSubmit={handleSubmit}>
-					<Field component={renderField} name='title' label='Title' autoFocus />
-					<Field component={renderField} name='description' label='Description' />
-				</form>
+				<Row>
+					<Col xs={2} />
+					<Col xs={8}>
+						<form onSubmit={handleSubmit}>
+							<Field component={renderField} name='title' label='Title' autoFocus />
+							<Field component={renderField} name='description' label='Description' />
+						</form>
+					</Col>
+					<Col xs={2} />
+				</Row>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button bsStyle='danger' type='reset' onClick={reset}>Reset</Button>
-				<Button bsStyle='primary' type='submit' onClick={submit}>Save</Button>
+				<div className={styles.button}>
+					<Button bsStyle='danger' type='reset' onClick={reset}>Reset</Button>
+					<Button bsStyle='primary' type='submit' onClick={submit}>Save</Button>
+				</div>
 			</Modal.Footer>
 		</Modal>
 	)
