@@ -70,13 +70,13 @@ module.exports = merge(baseWebpackConfig, {
 	},
 	plugins: [
 		new DashboardPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NamedModulesPlugin(),
 		new HtmlWebpackPlugin({
-			title: 'React Redux Boilerplate',
+			title: 'React Redux ToDoList',
 			filename: 'index.html',
 			template: path.resolve(projectRoot, 'public/index.html')
 		}),
-		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NamedModulesPlugin(),
 		new webpack.DefinePlugin({
 			__DEBUG__: 'true'
 		}),

@@ -1,4 +1,5 @@
 const initialState = {
+	lastId: 0,
 	data: []
 }
 
@@ -10,6 +11,7 @@ export default (state = initialState, action) => {
 		case 'ADD_LIST':
 			return {
 				...state,
+				lastId: action.payload.id,
 				data: [ ...state.data, action.payload ]
 			}
 		case 'EDIT_LIST':

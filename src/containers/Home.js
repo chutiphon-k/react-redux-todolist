@@ -24,8 +24,7 @@ class Home extends Component {
 	}
 
 	_callModalAdd () {
-		let lastId = (this.props.lists.length === 0) ? 0 : [...this.props.lists].pop().id
-		this.setState({ showModalAdd: !this.state.showModalAdd, taskId: lastId + 1 })
+		this.setState({ showModalAdd: !this.state.showModalAdd, taskId: this.props.lastId + 1 })
 	}
 
 	_callModalEdit (taskId) {
@@ -100,6 +99,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => ({
+	lastId: state.lists.lastId,
 	lists: state.lists.data
 })
 

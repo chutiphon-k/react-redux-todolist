@@ -94,18 +94,6 @@ module.exports = merge(baseWebpackConfig, {
 				comments: false
 			}
 		}),
-		new HtmlWebpackPlugin({
-			title: 'React Redux Boilerplate',
-			filename: path.resolve(projectRoot, 'build/index.html'),
-			template: path.resolve(projectRoot, 'public/index.html'),
-			minify: {
-				collapseWhitespace: true,
-				removeComments: true,
-				removeRedundantAttributes: true,
-				removeScriptTypeAttributes: true,
-				removeStyleLinkTypeAttributes: true
-			}
-		}),
 		new CompressionPlugin({
 			asset: '[path].gz[query]',
 			algorithm: 'gzip',
@@ -140,6 +128,18 @@ module.exports = merge(baseWebpackConfig, {
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false
+		}),
+		new HtmlWebpackPlugin({
+			title: 'React Redux ToDoList',
+			filename: path.resolve(projectRoot, 'build/index.html'),
+			template: path.resolve(projectRoot, 'public/index.html'),
+			minify: {
+				collapseWhitespace: true,
+				removeComments: true,
+				removeRedundantAttributes: true,
+				removeScriptTypeAttributes: true,
+				removeStyleLinkTypeAttributes: true
+			}
 		}),
 		new webpack.DefinePlugin({
 			__DEBUG__: 'false'
