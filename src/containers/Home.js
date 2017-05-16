@@ -72,11 +72,11 @@ class Home extends Component {
 				</Row>
 				<FormAddList
 					showModal={this.state.showModalAdd}
-					_callModal={this.callModalAdd}
+					callModal={this.callModalAdd}
 					taskId={this.state.taskId} />
 				<FormEditList
 					showModal={this.state.showModalEdit}
-					_callModal={this.callModalEdit}
+					callModal={this.callModalEdit}
 					taskId={this.state.taskId} />
 			</div>
 		)

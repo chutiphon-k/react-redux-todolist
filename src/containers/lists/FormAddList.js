@@ -11,7 +11,7 @@ const { addList } = actions
 class FormAddList extends Component {
 	static propTypes = {
 		showModal: PropTypes.bool.isRequired,
-		_callModal: PropTypes.func.isRequired,
+		callModal: PropTypes.func.isRequired,
 		taskId: PropTypes.number
 	}
 
@@ -19,7 +19,7 @@ class FormAddList extends Component {
 		return (
 			<ModalFormList
 				showModal={this.props.showModal}
-				onHide={this.props._callModal}
+				onHide={this.props.callModal}
 				handleSubmit={this.props.handleSubmit}
 				submit={this.props.submit}
 				reset={this.props.reset}
@@ -44,7 +44,7 @@ const mapStateToProps = (state, ownProps) => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	onSubmit (data) {
-		ownProps._callModal()
+		ownProps.callModal()
 		dispatch(addList({
 			...data,
 			id: ownProps.taskId,
